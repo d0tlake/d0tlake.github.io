@@ -19,7 +19,7 @@ function idleSplatsFunction() {
 let config = {
     SIM_RESOLUTION: 256,
     DYE_RESOLUTION: 2048,
-    DENSITY_DISSIPATION: 0.999,
+    DENSITY_DISSIPATION: 0.997,
     VELOCITY_DISSIPATION: 0.9,
     PRESSURE_DISSIPATION: 0,
     PRESSURE_ITERATIONS: 20,
@@ -36,7 +36,7 @@ let config = {
     BLOOM_INTENSITY: 0.8,
     BLOOM_THRESHOLD: 0.6,
     BLOOM_SOFT_KNEE: 0.7,
-    POINTER_COLOR: [{ r: 0.77, g: 0.61, b: 1 }],
+    POINTER_COLOR: [{ r: 0, g: 0, b: 0 }],
     FREQ_RANGE: 0,
     FREQ_RANGE_START: 0,
     IDLE_SPLATS: false,
@@ -1149,10 +1149,10 @@ canvas.addEventListener("mousedown", () => {
 });
 
 function generateColor () {
-    let c = HSVtoRGB(Math.random(), 1.0, 1.0);
-    c.r *= 0.15;
-    c.g *= 0.15;
-    c.b *= 0.15;
+    let c = HSVtoRGB(Math.random(), 1, 1);
+    c.r *= 0.1;
+    c.g *= 0.1;
+    c.b *= 0.1;
     return c;
 }
 
