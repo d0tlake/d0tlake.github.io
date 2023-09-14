@@ -3,60 +3,108 @@
     src: url("font.woff2");
 }
 
+button {
+    display: block;
+    align-items: center;
+    border: 0;
+    border-radius: 4px;
+    color: PINK;
+    font-family: f;
+    font-size: 100px;
+    justify-content: center;
+    line-height: 4em;
+    text-decoration: none;
+    user-select: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: rgba(24, 24, 24, 1);
+    z-index: 1000;
+}
+
 body {
-	font-family: f;
-	font-size: 46px;
-	margin: 0;
-	position: fixed;
-	width: 100%;
-	height: 100%;
+    font-family: f;
+    font-size: 42px;
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 img {
-	position: fixed;
+    position: fixed;
     bottom: 0;
-	height: 100%;
-	left:0;
+    height: 100%;
+    left: 0;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 canvas {
-	top: 0;
-	left: 0;
-	z-index: -1;
-	width: 100%;
-	height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
 }
 
 marquee {
-	position: fixed;
-	top: 0.5em;
-	color: pink;
-	right: 11%;
-	width: 50%;
+    display: none;
+    position: fixed;
+    top: 0.4em;
+    color: pink;
+    right: 11%;
+    width: 50%;
+    text-decoration: underline;
+    pointer-events: all;
+    cursor: pointer;
 }
 
 .container {
-	pointer-events:none;   
-	display: grid; 
-	grid-template-columns: 1fr 1fr; 
-	grid-template-rows: 0.8fr 0.2fr 2fr; 
-	gap: 0px 0px; 
-	grid-template-areas: 
-	"image blank"
-	"image ticker"
-	"image video"; 
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.8fr 0.2fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "image ticker"
+        "image video";
 }
-.image { grid-area: image; }
-.blank { grid-area: blank; }
-.ticker { grid-area: ticker; }
-.video { grid-area: video; }
 
-.video iframe 
-{
-	pointer-events: all;
-	position: fixed;
-	top: 1.5em;
-	aspect-ratio: 16 / 9;
-	right: 11%;
-	width: 50%;
+.image {
+    grid-area: image;
+}
+
+.ticker {
+    grid-area: ticker;
+}
+
+.video {
+    grid-area: video;
+}
+
+#video {
+    display: none;
+    position: fixed;
+    top: 1.6em;
+    aspect-ratio: 16 / 9;
+    right: 11%;
+    width: 50%;
+    border-radius: 10px;
+}
+
+#loading {
+    display: none;
+}
+
+#loading img {
+    border-radius: 50%;
+    width: auto;
+    height: 60%;
+    z-index: 1000;
 }
