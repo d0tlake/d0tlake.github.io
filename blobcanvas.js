@@ -18,143 +18,33 @@ function idleSplatsFunction() {
 
 let config = {
     SIM_RESOLUTION: 256,
-    DYE_RESOLUTION: 1024,
-    DENSITY_DISSIPATION: 0.97,
-    VELOCITY_DISSIPATION: 0.98,
-    PRESSURE_DISSIPATION: 0.8,
+    DYE_RESOLUTION: 2048,
+    DENSITY_DISSIPATION: 0.999,
+    VELOCITY_DISSIPATION: 0.9,
+    PRESSURE_DISSIPATION: 0,
     PRESSURE_ITERATIONS: 20,
-    CURL: 30,
+    CURL: 0,
     SPLAT_RADIUS: 0.3,
-    SHADING: true,
+    SHADING: false,
     COLORFUL: true,
     PAUSED: false,
-    BACK_COLOR: { r: 0, g: 0, b: 0 },
+    BACK_COLOR: { r: 24, g: 24, b: 24 },
     TRANSPARENT: false,
-    BLOOM: true,
+    BLOOM: false,
     BLOOM_ITERATIONS: 8,
     BLOOM_RESOLUTION: 256,
     BLOOM_INTENSITY: 0.8,
     BLOOM_THRESHOLD: 0.6,
     BLOOM_SOFT_KNEE: 0.7,
-    POINTER_COLOR: [{ r: 0, g: 0.15, b: 0 }],
-    SOUND_SENSITIVITY: 0.25,
-    AUDIO_RESPONSIVE: true,
-    FREQ_RANGE: 8,
+    POINTER_COLOR: [{ r: 0.77, g: 0.61, b: 1 }],
+    FREQ_RANGE: 0,
     FREQ_RANGE_START: 0,
     IDLE_SPLATS: false,
-    RANDOM_AMOUNT: 10,
-    RANDOM_INTERVAL: 1,
-    SPLAT_ON_CLICK: true,
+    RANDOM_AMOUNT: 0,
+    RANDOM_INTERVAL: 0,
+    SPLAT_ON_CLICK: false,
     SHOW_MOUSE_MOVEMENT: true
 };
-
-document.addEventListener("DOMContentLoaded", () => {   
-    window.wallpaperPropertyListener = {
-        applyUserProperties: (properties) => {
-            if (properties.bloom_intensity) config.BLOOM_INTENSITY = properties.bloom_intensity.value;
-            if (properties.bloom_threshold) config.BLOOM_THRESHOLD = properties.bloom_threshold.value;
-            if (properties.colorful) config.COLORFUL = properties.colorful.value;
-            if (properties.density_diffusion) config.DENSITY_DISSIPATION = properties.density_diffusion.value;
-            if (properties.enable_bloom) config.BLOOM = properties.enable_bloom.value;
-            if (properties.paused) config.PAUSED = properties.paused.value;
-            if (properties.pressure_diffusion) config.PRESSURE_DISSIPATION = properties.pressure_diffusion.value;
-            if (properties.shading) config.SHADING = properties.shading.value;
-            if (properties.splat_radius) config.SPLAT_RADIUS = properties.splat_radius.value;
-            if (properties.velocity_diffusion) config.VELOCITY_DISSIPATION = properties.velocity_diffusion.value;
-            if (properties.vorticity) config.CURL = properties.vorticity.value;
-            if (properties.sound_sensitivity) config.SOUND_SENSITIVITY = properties.sound_sensitivity.value;
-            if (properties.audio_responsive) config.AUDIO_RESPONSIVE = properties.audio_responsive.value;
-            if (properties.simulation_resolution) {
-                config.SIM_RESOLUTION = properties.simulation_resolution.value;
-                initFramebuffers();
-            }
-            if (properties.dye_resolution) {
-                config.DYE_RESOLUTION = properties.dye_resolution.value;
-                initFramebuffers();
-            }
-            if (properties.splat_color) {
-                splatColors[0] = rgbToPointerColor(properties.splat_color.value);
-                if (!config.COLORFUL) config.POINTER_COLOR = [splatColors[0]];
-            }
-            if (properties.splat_color_2) splatColors[1] = rgbToPointerColor(properties.splat_color_2.value);
-            if (properties.splat_color_3) splatColors[2] = rgbToPointerColor(properties.splat_color_3.value);
-            if (properties.splat_color_4) splatColors[3] = rgbToPointerColor(properties.splat_color_4.value);
-            if (properties.splat_color_5) splatColors[4] = rgbToPointerColor(properties.splat_color_5.value);
-            if (properties.background_color) {
-                let c = properties.background_color.value.split(" "),
-                r = Math.floor(c[0]*255),
-                g = Math.floor(c[1]*255),
-                b = Math.floor(c[2]*255);
-                document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-                config.BACK_COLOR.r = r;
-                config.BACK_COLOR.g = g;
-                config.BACK_COLOR.b = b;
-            }
-            if (properties.more_colors && !properties.more_colors.value) {
-                config.POINTER_COLOR = [splatColors[0]];
-            } else if (properties.more_colors && properties.more_colors.value) {
-                config.POINTER_COLOR = splatColors;
-            }
-            if (properties.use_background_image) config.TRANSPARENT = properties.use_background_image.value;
-            if (properties.background_image) canvas.style.backgroundImage = `url("file:///${properties.background_image.value}")`;
-            if (properties.repeat_background) canvas.style.backgroundRepeat = properties.repeat_background.value ? "repeat" : "no-repeat";
-            if (properties.background_image_size) canvas.style.backgroundSize = properties.background_image_size.value;
-            if (properties.frequency_range) {
-                config.FREQ_RANGE = properties.frequency_range.value;
-
-                if (config.FREQ_RANGE + config.FREQ_RANGE_START > 61) {
-                    config.FREQ_RANGE_START = 62 - config.FREQ_RANGE;
-                }
-            }
-            if (properties.frequency_range_start) {
-                if (config.FREQ_RANGE + properties.frequency_range_start.value > 61) {
-                    config.FREQ_RANGE_START = 62 - config.FREQ_RANGE;
-                } else {
-                    config.FREQ_RANGE_START = properties.frequency_range_start.value;
-                }
-            }
-            if (properties.idle_random_splats) {
-                config.IDLE_SPLATS = properties.idle_random_splats.value;
-                if (properties.idle_random_splats.value) {
-                    idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
-                } else {
-                    clearInterval(idleSplats);
-                }
-            }
-            if (properties.random_splat_interval) {
-                config.RANDOM_INTERVAL = properties.random_splat_interval.value;
-                if (config.IDLE_SPLATS) {
-                    clearInterval(idleSplats);
-                    idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
-                }
-            }
-            if (properties.random_splat_amount) {
-                config.RANDOM_AMOUNT = properties.random_splat_amount.value;
-                if (config.IDLE_SPLATS) {
-                    clearInterval(idleSplats);
-                    idleSplats = setInterval(idleSplatsFunction, config.RANDOM_INTERVAL * 1000);
-                }
-            }
-            if (properties.splat_on_click) config.SPLAT_ON_CLICK = properties.splat_on_click.value;
-            if (properties.show_mouse_movement) config.SHOW_MOUSE_MOVEMENT = properties.show_mouse_movement.value;
-        }
-    };
-
-    window.wallpaperRegisterAudioListener((audioArray) => {
-        if (!config.AUDIO_RESPONSIVE) return;
-        if (audioArray[0] > 5) return;
-
-        let bass = 0.0;
-        let half = Math.floor(audioArray.length / 2);
-
-        for (let i = 0; i <= config.FREQ_RANGE; i++) {
-            bass += audioArray[i + config.FREQ_RANGE_START];
-            bass += audioArray[half + (i + config.FREQ_RANGE_START)];
-        }
-        bass /= (config.FREQ_RANGE * 2);
-        multipleSplats(Math.floor((bass * config.SOUND_SENSITIVITY) * 10));
-    });
-});
 
 function indexOfMax(arr) {
     if (arr.length === 0) {
@@ -786,8 +676,6 @@ let curl;
 let pressure;
 let bloom;
 
-let ditheringTexture = createTextureAsync('LDR_RGB1_0.png');
-
 const clearProgram               = new GLProgram(baseVertexShader, clearShader);
 const colorProgram               = new GLProgram(baseVertexShader, colorShader);
 const backgroundProgram          = new GLProgram(baseVertexShader, backgroundShader);
@@ -962,7 +850,6 @@ function createTextureAsync (url) {
 }
 
 initFramebuffers();
-multipleSplats(parseInt(Math.random() * 20) + 3);
 
 let lastColorChangeTime = Date.now();
 
@@ -1259,25 +1146,6 @@ canvas.addEventListener('touchstart', e => {
 canvas.addEventListener("mousedown", () => {
     if (!config.SPLAT_ON_CLICK) return;
     multipleSplats(parseInt(Math.random() * 20) + 5);
-});
-
-window.addEventListener('mouseleave', () => {
-    pointers[0].down = false;
-});
-
-window.addEventListener('touchend', e => {
-    const touches = e.changedTouches;
-    for (let i = 0; i < touches.length; i++)
-        for (let j = 0; j < pointers.length; j++)
-            if (touches[i].identifier == pointers[j].id)
-                pointers[j].down = false;
-});
-
-window.addEventListener('keydown', e => {
-    if (e.code === 'KeyP')
-        config.PAUSED = !config.PAUSED;
-    if (e.key === ' ')
-        splatStack.push(parseInt(Math.random() * 20) + 5);
 });
 
 function generateColor () {
