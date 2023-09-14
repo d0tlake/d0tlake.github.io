@@ -1,9 +1,62 @@
+@font-face {
+    font-family: f;
+    src: url("font.otf") format("opentype");
+}
+
 body {
-    background-color: #181818;
+	font-family: f;
+	font-size: 46px;
+	margin: 0;
+	position: fixed;
+	width: 100%;
+	height: 100%;
 }
 
 img {
-    position: fixed;
-    bottom: 0px;
-    height: 100%;
+	position: fixed;
+    bottom: 0;
+	height: 100%;
+	left:0;
+}
+
+canvas {
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+
+marquee {
+	position: fixed;
+	top: 0.5em;
+	color: pink;
+	right: 11%;
+	width: 50%;
+}
+
+.container {
+	pointer-events:none;   
+	display: grid; 
+	grid-template-columns: 1fr 1fr; 
+	grid-template-rows: 0.8fr 0.2fr 2fr; 
+	gap: 0px 0px; 
+	grid-template-areas: 
+	"image blank"
+	"image ticker"
+	"image video"; 
+}
+.image { grid-area: image; }
+.blank { grid-area: blank; }
+.ticker { grid-area: ticker; }
+.video { grid-area: video; }
+
+.video iframe 
+{
+	pointer-events: all;
+	position: fixed;
+	top: 1.5em;
+	aspect-ratio: 16 / 9;
+	right: 11%;
+	width: 50%;
 }
