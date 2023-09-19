@@ -64,7 +64,8 @@ marquee {
     color: pink;
     right: 11%;
     width: 50%;
-    pointer-events: all;
+    /*text-decoration: underline;*/
+    /*pointer-events: all;*/
     cursor: pointer;
 	z-index: 200;
 }
