@@ -102,14 +102,3 @@ marquee {
     width: 50%;
     border-radius: 10px;
 }
-
-#loading {
-    display: none;
-}
-
-#loading img {
-    border-radius: 50%;
-    width: auto;
-    height: 60%;
-	z-index: 1000;
-}
