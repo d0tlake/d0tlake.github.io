@@ -96,9 +96,5 @@ marquee {
 #video {
     display: none;
     position: fixed;
-    top: 1.6em;
-    aspect-ratio: 16 / 9;
-    right: 11%;
-    width: 50%;
-    border-radius: 10px;
+    width: 100%;
 }
