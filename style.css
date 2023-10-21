@@ -3,6 +3,10 @@
     src: url("font.woff2");
 }
 
+#mus {
+    display: none;
+}
+
 button {
     display: block;
     align-items: center;
@@ -37,9 +41,9 @@ body {
 
 img {
     position: fixed;
-    bottom: 0;
-    height: 100%;
-    left: 0;
+    bottom: 3.5%;
+    left: 2%;
+    height: 10%;
     -khtml-user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
@@ -96,7 +100,7 @@ marquee {
 #video {
     display: none;
     position: fixed;
-    width: 100%;
-    -ms-transform: translateY(-18%);
-    transform: translateY(-18%);
+    width: 145%;
+    transform: translate(-18%, -7%);
+    -ms-transform: translate(-18%, -7%);
 }
