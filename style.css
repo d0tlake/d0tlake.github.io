@@ -7,15 +7,31 @@
     display: none;
 }
 
+a {
+	color: rgb(192, 230, 255);
+	display: block;
+	font-size: 100px;
+	text-decoration: none;
+	user-select: none;
+	position: absolute;
+	bottom: 4rem;
+	cursor: pointer;
+	z-index: 1001;
+	left: 12rem;
+	height: 5rem;
+}
+
+a:hover {
+    color: rgb(255, 86, 173);
+}
+
 button {
     display: block;
-    align-items: center;
     border: 0;
     border-radius: 4px;
-    color: PINK;
+    color: rgb(255, 86, 173);
     font-family: f;
     font-size: 100px;
-    justify-content: center;
     line-height: 4em;
     text-decoration: none;
     user-select: none;
@@ -40,16 +56,17 @@ body {
 }
 
 img {
-    position: fixed;
-    bottom: 3.5%;
-    left: 2%;
-    height: 10%;
-    -khtml-user-select: none;
-    -o-user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    z-index: 200;
+	position: fixed;
+	bottom: 2rem;
+	left: 2rem;
+	height: 10rem;
+	display: none;
+	-khtml-user-select: none;
+	-o-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	z-index: 200;
 }
 
 canvas {
@@ -59,19 +76,7 @@ canvas {
     z-index: 100;
     width: 100%;
     height: 100%;
-}
-
-marquee {
     display: none;
-    position: fixed;
-    top: 0.4em;
-    color: pink;
-    right: 11%;
-    width: 50%;
-    /*text-decoration: underline;*/
-    /*pointer-events: all;*/
-    cursor: pointer;
-	z-index: 200;
 }
 
 .container {
