@@ -8,6 +8,7 @@
 <body>
 	<canvas id="canvas"></canvas>
 	<a href="https://bsky.app/profile/lake.reisen">bluesky</a>
+	<a id="warning">(warning: flashing lights and sound)</a>
     <div id="button">
         <button id="enter">E N T E R</button>
     </div>
@@ -34,12 +35,14 @@
 	var mus = document.getElementById("mus");
 	var img = document.getElementById("img");
 	var canv = document.getElementById("canvas");
+	var warningBtn = document.getElementById("warning");
 		
 	button.addEventListener('click', function(event) {
 		img.style["display"] = "unset";
 		video.style["display"] = "unset";
 		canv.style["display"] = "unset";
 		button.style["display"] = "none";
+		warningBtn.style["display"] = "none";
 		mus.volume = 0.5;
 		mus.play();
 		video.play();
@@ -52,15 +55,15 @@
 	
 	const multiple = 10;
 	const mouseOverContainer = document.getElementsByTagName("body")[0];
-	const element = document.getElementById("enter");
+	const enterBtn = document.getElementById("enter");
 
 	function transformElement(x, y) {
-		let box = element.getBoundingClientRect();
+		let box = enterBtn.getBoundingClientRect();
 		const calcX = -(y - box.y - box.height / 2) / multiple;
 		const calcY = (x - box.x - box.width / 2) / multiple;
 		const percentage = parseInt((x - box.x) / box.width * 1000) / 10;
 		
-		element.style.transform = "rotateX(" + calcX*1.2 + "deg) " + "rotateY(" + calcY*.5 + "deg)";
+		enterBtn.style.transform = "rotateX(" + calcX*1.2 + "deg) " + "rotateY(" + calcY*.5 + "deg)";
 	}
 
 	mouseOverContainer.addEventListener("mousemove", (e) => {
@@ -71,9 +74,10 @@
 
 	mouseOverContainer.addEventListener("mouseleave", (e) => {
 		window.requestAnimationFrame(function () {
-			element.style.transform = "rotateX(0) rotateY(0)";
+			enterBtn.style.transform = "rotateX(0) rotateY(0)";
 		});
 	});
+
 </script>
 
 </html>
